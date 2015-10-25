@@ -1,0 +1,7 @@
+"Kill 2 Build"
+{
+	"base"	"sandbox"
+	"title"	"Kill 2 Build"
+	"maps"	"^gm_"
+	"menusystem"	"1"
+}
