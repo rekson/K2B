@@ -1,4 +1,4 @@
-"Kill 2 Build"
+"kill2build"
 {
 	"base"	"sandbox"
 	"title"	"Kill 2 Build"
