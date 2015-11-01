@@ -8,7 +8,7 @@ if (SERVER) then
 			
 			attKC = attKC + worth
 			attacker:SetNWInt("KillCredit", attKC)
-			attacker:SendLua("GAMEMODE:AddNotify(\"".. ply:Nick() .. " was worth " .. worth .. " kill credits! Total kill credits: " .. attacker:GetNWInt("KilLCredit") .. "\", NOTIFY_GENERIC, 2)")
+			attacker:PrintMessage(HUD_PRINTTALK, ply:Nick() .. " was worth " .. worth .. " kill credits! Total kill credits: " .. attacker:GetNWInt("KilLCredit"))
 		end
 		
 		ply:SetNWInt("KillCredit", 0)
