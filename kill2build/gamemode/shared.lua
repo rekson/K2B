@@ -6,3 +6,4 @@ GM.Email = "N/A"
 GM.Website = "N/A"
 
 DeriveGamemode("sandbox")
+include("shared/sh_loadWhitelist.lua")

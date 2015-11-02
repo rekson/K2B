@@ -27,7 +27,7 @@ function kill2BuildHUD() // Load in newly designed HUD
 	local health = ply:Health();
 	local armor = ply:Armor();
 	
-	draw.RoundedBox(3, ScrW()-2560, ScrH() - 45, 4096, 45, Color(40, 40, 40, 230)); // Main Box
+	draw.RoundedBox(0,0, ScrH() - 45, ScrW(), 45, Color(40, 40, 40, 230)); // Main Box
 	
 	// Health
 	draw.RoundedBox(3, 59, ScrH() - 36,204, 22, Color(210, 53, 53, 35) ); // Health Bar Shadow
@@ -51,17 +51,13 @@ function kill2BuildHUD() // Load in newly designed HUD
 	draw.SimpleText("Deaths ", "micro", 700, ScrH() - 37, color_white, TEXT_ALIGN_CENTER)
 	draw.SimpleText(ply:Deaths(), "micro", 750, ScrH() - 37, color_white, TEXT_ALIGN_LEFT)
 	
-	//if(ply:Alive()) then
-		//if(ply:GetActiveWeapon() and ply:GetActiveWeapon():GetPrintName() != nil) then
-			//draw.SimpleText(ply:GetActiveWeapon():GetPrintName(), "macro", 1400, ScrH() - 40, color_white, TEXT_ALIGN_CENTER)
-		//end
-	//end
+	if(ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon():GetPrintName() != nil) then
+		draw.SimpleText(ply:GetActiveWeapon():GetPrintName(), "macro", ScrW() - 75, ScrH() - 40, color_white, TEXT_ALIGN_CENTER)
+	end
 	
-	if(ply:Alive()) then
-		if(ply:GetActiveWeapon():Clip1() != nil) then
-			if(ply:GetActiveWeapon():Clip1() != -1) then
-				draw.SimpleText("Ammo " .. ply:GetActiveWeapon():Clip1() .. " / " .. ply:GetAmmoCount(ply:GetActiveWeapon():GetPrimaryAmmoType()), macro, 1400, ScrH() - 19.5, color_white,TEXT_ALIGN_CENTER )
-			end
+	if(ply:GetActiveWeapon():IsValid() and ply:GetActiveWeapon():Clip1() != nil) then
+		if(ply:GetActiveWeapon():Clip1() != -1) then
+			draw.SimpleText("Ammo " .. ply:GetActiveWeapon():Clip1() .. " / " .. ply:GetAmmoCount(ply:GetActiveWeapon():GetPrimaryAmmoType()), macro, ScrW() - 75, ScrH() - 19.5, color_white,TEXT_ALIGN_CENTER )
 		end
 	end
 end

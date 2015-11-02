@@ -1,4 +1,4 @@
-include("sv_shared.lua")
+include("shared.lua")
 
 if SERVER then
 	print("Loading network strings")
