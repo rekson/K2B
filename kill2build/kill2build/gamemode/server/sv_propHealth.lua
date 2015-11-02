@@ -1,13 +1,11 @@
-include("shared/sh_loadWhitelist.lua")
+include("shared/sv_shared.lua")
 
 function entityDamage(entity, dmgInfo)
-local attacker = dmgInfo:GetAttacker()
 	health = entity:GetNWInt("PropHealth")
 	maxHealth = tonumber(allowedProps[entity:GetModel()]["maxHealth"])
 	attacker = dmgInfo:GetAttacker()
 	blackness = 255 * (health/maxHealth)
-
-
+	
 	if attacker:IsPlayer() and attacker == entity:GetNetworkedEntity("Owner") then
 		weapon = attacker:GetActiveWeapon()
 		if weapon:GetClass() == "Crowbar" or weapon:GetClass() == "weapon_crowbar" then

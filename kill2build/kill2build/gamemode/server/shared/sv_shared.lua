@@ -1,7 +1,7 @@
 if SERVER then	
 	print("Loading whitelists")
 	allowedProps = {}
-	aP = file.Read("data/k2bAllowedProps.txt")
+	aP = file.Read("k2bAllowedProps.txt", "DATA")
 	aP = aP:gsub("%s+", "")
 	pLine = string.Split(aP, ";")
 	
@@ -21,7 +21,7 @@ if SERVER then
 	
 	-- Load and parse entity whitelist
 	allowedEntities = {}
-	aP = file.Read("data/k2bAllowedEntities.txt")
+	aP = file.Read("k2bAllowedEntities.txt", "DATA")
 	aP = aP:gsub("%s+", "")
 	pLine = string.Split(aP, ";")
 	

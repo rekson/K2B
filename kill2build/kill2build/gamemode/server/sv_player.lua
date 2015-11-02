@@ -5,18 +5,11 @@ if (SERVER) then
 			attKC = attacker:GetNWInt("KillCredit")
 			vicKC = ply:GetNWInt("KillCredit")
 			worth = 4 + math.floor(vicKC / 4)
+			math.Clamp(worth, 4, 12)
 			
 			attKC = attKC + worth
 			attacker:SetNWInt("KillCredit", attKC)
 			attacker:PrintMessage(HUD_PRINTTALK, ply:Nick() .. " was worth " .. worth .. " kill credits! Total kill credits: " .. attacker:GetNWInt("KilLCredit"))
-		end
-		
-		ply:SetNWInt("KillCredit", 0)
-		
-		for k, v in pairs(ents.GetAll()) do
-			if v:GetNetworkedEntity("Owner") == ply then
-				v:Remove()
-			end
 		end
 	end
 	hook.Add("PlayerDeath", "OnPlayerDeath", onPlayerDeath)
