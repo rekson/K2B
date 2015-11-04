@@ -9,9 +9,9 @@ PList["Desk"] = {posX = 170 + 80 + 10, posY = 50 + 10, model = "models/props_was
 PList["LargeMetalPanel"] = {posX = 250 + 80 + 10, posY = 50 + 10, model = "models/props_debris/metal_panel01a.mdl", tt = "Health: 150\nKill count cost: 3"}
 --Medium price
 PList["ConcreteBarrier"] = {posX = 10 + 10,  posY = 230 + 10, model = "models/props_c17/concrete_barrier001a.mdl", tt = "Health: 225\nKill count cost: 4"}
-PList["Stove"] = {posX = 10 + 80 + 10, posY = 230 + 10, model = "models/props_c17/furnitureStove001a.mdl", tt = "Health: 250\nKill count cost: 4"}
-PList["VendingMachineDoor"] = {posX = 90 + 80 + 10, posY = 230 + 10, model = "models/props_interiors/VendingMachineSoda01a_door.mdl", tt = "Health: 300\nKill count cost: 6"}
-PList["MetalGate"] = {posX = 170 + 80 + 10, posY = 230 + 10, model = "models/props_building_details/Storefront_Template001a_Bars.mdl", tt = "Health: 225\nKill count cost: 4"}
+PList["Stove"] = {posX = 10 + 80 + 10, posY = 230 + 10, model = "models/props_c17/furniturestove001a.mdl", tt = "Health: 250\nKill count cost: 4"}
+PList["VendingMachineDoor"] = {posX = 90 + 80 + 10, posY = 230 + 10, model = "models/props_interiors/vendingmachinesoda01a_door.mdl", tt = "Health: 300\nKill count cost: 6"}
+PList["MetalGate"] = {posX = 170 + 80 + 10, posY = 230 + 10, model = "models/props_building_details/storefront_template001a_bars.mdl", tt = "Health: 225\nKill count cost: 4"}
 PList["BlastDoor"] = {posX = 250 + 80 + 10, posY = 230 + 10, model = "models/props_lab/blastdoor001a.mdl", tt = "Health: 350\nKill count cost: 8"}
 --Expensive price
 PList["Metal1x2"] = {posX = 10 + 10,  posY = 410 + 10, model = "models/props_phx/construct/metal_plate1x2.mdl", tt = "Health: 375\nKill count cost: 8"}
@@ -36,9 +36,10 @@ WList["RPG"] = {posX = 90 + 80 + 10, posY = 410 + 10, model = "models/weapons/w_
 
 EList = {}
 --Health and suit
-EList["HealthVial"] = {posX = 10 + 10,  posY = 50 + 10, model = "models/healthvial.mdl", tt = "Heals 10 health.\nKill credit cost: 2"}
-EList["SuitBattery"] = {posX = 10 + 80 + 10, posY = 50 + 10, model = "models/Items/battery.mdl", tt = "Gives 15 suit charge.\nKill credit cost: 2"}
-EList["HealthKit"] = {posX = 90 + 80 + 10, posY = 50 + 10, model = "models/Items/HealthKit.mdl", tt = "Heals 25 health.\nKill count cost: 5"}
+EList["HealStick"] = {posX = 10 + 10,  posY = 50 + 10, model = "models/weapons/w_stunbaton.mdl", tt = "Heal Stick\nRestores 15 health to your props.\nKill count cost: 8"}
+EList["HealthVial"] = {posX = 10 + 80 + 10, posY = 50 + 10, model = "models/healthvial.mdl", tt = "Heals 10 health.\nKill credit cost: 2"}
+EList["SuitBattery"] = {posX = 90 + 80 + 10, posY = 50 + 10, model = "models/Items/battery.mdl", tt = "Gives 15 suit charge.\nKill credit cost: 2"}
+EList["HealthKit"] = {posX = 170 + 80 + 10, posY = 50 + 10, model = "models/Items/HealthKit.mdl", tt = "Heals 25 health.\nKill count cost: 5"}
 --Ammo
 EList["PistolAmmo"] = {posX = 10 + 10,  posY = 230 + 10, model = "models/Items/BoxSRounds.mdl", tt = "Pistol Ammo\nKill count cost: 1"}
 EList["375Ammo"] = {posX = 10 + 80 + 10, posY = 230 + 10, model = "models/Items/357ammobox.mdl", tt = "375 Ammo\nKill count cost: 2"}
@@ -56,6 +57,10 @@ DLList["Category2"] = {posX = 10, posY = 180 + 10, text = "Category2"}
 DLList["Category3"] = {posX = 10, posY = 360 + 10, text = "Category3"}
 
 menuFrame = nil
+sheet = nil
+
+weaponFrame = nil
+lastTab = 0
 
 function buyMenuOpen()
 	menuFrame = vgui.Create("DFrame")
@@ -64,26 +69,26 @@ function buyMenuOpen()
 	menuFrame:Center()
 	menuFrame:ShowCloseButton(false)
 
-	local sheet = vgui.Create("DPropertySheet", menuFrame)
+	sheet = vgui.Create("DPropertySheet", menuFrame)
 	sheet:Dock(FILL)
 
 	local propPanel = vgui.Create("DScrollPanel", sheet)
 	propPanel:SetPos(40, 40)
 	propPanel:SetText("Props")
 	propPanel:SizeToContents()
-	sheet:AddSheet("Props", propPanel, "icon16/wrench_orange.png")
+	local propTab = sheet:AddSheet("Props", propPanel, "icon16/wrench_orange.png").Tab
 	
 	local weaponPanel = vgui.Create("DScrollPanel", sheet)
 	weaponPanel:SetPos(40, 40)
 	weaponPanel:SetText("Weapons")
 	weaponPanel:SizeToContents()
-	sheet:AddSheet("Weapons", weaponPanel, "icon16/bomb.png")
+	local weaponTab = sheet:AddSheet("Weapons", weaponPanel, "icon16/bomb.png").Tab
 	
 	local entPanel = vgui.Create("DScrollPanel", sheet)
 	entPanel:SetPos(40, 40)
 	entPanel:SetText("Entities")
 	entPanel:SizeToContents()
-	sheet:AddSheet("Entities", entPanel, "icon16/box.png")
+	local entTab = sheet:AddSheet("Entities", entPanel, "icon16/box.png").Tab
 	
 	gui.EnableScreenClicker(true)
 	
@@ -177,12 +182,22 @@ function buyMenuOpen()
 		end
 	end
 	
+	if lastTab == 0 then sheet:SetActiveTab(propTab) 
+	elseif lastTab == 1 then sheet:SetActiveTab(weaponTab)
+	elseif lastTab == 2 then sheet:SetActiveTab(entTab) end
+	
 	return false
 end
 hook.Add("SpawnMenuOpen", "OpenSpawnMenu", buyMenuOpen)
 
 function buyMenuClose()
 	if menuFrame != nil and menuFrame != NULL then
+		if sheet != nil and sheet != NULL then 
+			if sheet:GetActiveTab():GetText() == "Props" then lastTab = 0
+			elseif sheet:GetActiveTab():GetText() == "Weapons" then lastTab = 1
+			elseif sheet:GetActiveTab():GetText() == "Entities" then lastTab = 2 end
+		else print("sheet is nil") end
+		
 		menuFrame:Close()
 		gui.EnableScreenClicker(false)
 	end

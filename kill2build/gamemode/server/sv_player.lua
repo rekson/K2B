@@ -5,7 +5,7 @@ if (SERVER) then
 			attKC = attacker:GetNWInt("KillCredit")
 			vicKC = ply:GetNWInt("KillCredit")
 			worth = 4 + math.floor(vicKC / 4)
-			math.Clamp(worth, 4, 12)
+			if worth > 12 then worth = 12 end
 			
 			attKC = attKC + worth
 			attacker:SetNWInt("KillCredit", attKC)
@@ -13,4 +13,14 @@ if (SERVER) then
 		end
 	end
 	hook.Add("PlayerDeath", "OnPlayerDeath", onPlayerDeath)
+	
+	function disablePhysDamage(entity, dmgInfo)
+		if dmgInfo:GetDamageType() == DMG_CRUSH or dmgInfo:GetDamageType() == DMG_PHYSGUN then return true end
+	end
+	hook.Add("EntityTakeDamage", "DisablePhysDamage", disablePhysDamage)
+	
+	function enableFreezeOwnership(ply, ent, physObj)
+		if ply != ent:GetNetworkedEntity("Owner") then return false end
+	end
+	hook.Add("CanPlayerUnfreeze", "EnableFreezeOwnership", enableFreezeOwnership)
 end

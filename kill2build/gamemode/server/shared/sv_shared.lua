@@ -1,7 +1,7 @@
 if SERVER then	
-	print("Loading whitelists")
 	allowedProps = {}
 	aP = file.Read("k2bAllowedProps.txt", "DATA")
+	if aP == nil then print("Error loading prop whitelist") end
 	aP = aP:gsub("%s+", "")
 	pLine = string.Split(aP, ";")
 	
@@ -11,7 +11,7 @@ if SERVER then
 		for ek, ev in pairs(pEpr) do
 			local name, value = unpack(string.Split(ev, "="))
 			if name == "model" then
-				propName = value
+				propName = string.lower(value)
 				allowedProps[propName] = {}
 			elseif propName != nil then
 				allowedProps[propName][name] = value
@@ -22,6 +22,7 @@ if SERVER then
 	-- Load and parse entity whitelist
 	allowedEntities = {}
 	aP = file.Read("k2bAllowedEntities.txt", "DATA")
+	if aP == nil then print("Error loading entity whitelist") end
 	aP = aP:gsub("%s+", "")
 	pLine = string.Split(aP, ";")
 	

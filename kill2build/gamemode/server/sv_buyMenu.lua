@@ -12,6 +12,7 @@ if SERVER then
 		if allowedProps[prop] then
 			price = tonumber(allowedProps[prop]["price"])
 			health = tonumber(allowedProps[prop]["maxHealth"])
+
 			if ply:GetNWInt("KillCredit") >= price then
 				local td = {}
 				td.start = ply:GetShootPos() + ply:GetAimVector() * 100
@@ -20,15 +21,17 @@ if SERVER then
 				local tr = util.TraceLine(td)
 				
 				if tr.Hit then
-					local ent=ents.Create("prop_physics")
-					ent:SetModel(prop)
-					ent:SetNetworkedEntity("Owner", ply)
-					ent:SetNWInt("PropHealth", health)
-					ent:SetPos(tr.HitPos + Vector(0, 0, 50))
-					ent:Spawn()
+					local entity=ents.Create("prop_physics")
+					entity:SetModel(prop)
+					entity:SetNetworkedEntity("Owner", ply)
+					entity:SetNWInt("PropHealth", health)
+					entity:SetRenderMode(RENDERMODE_TRANSALPHA)
+					entity:SetCustomCollisionCheck(true)
+					entity:SetPos(tr.HitPos + Vector(0, 0, 50))
+					entity:Spawn()
 					
 					undo.Create("prop")
-					undo.AddEntity(ent)
+					undo.AddEntity(entity)
 					undo.SetPlayer(ply)
 					undo.Finish()
 					

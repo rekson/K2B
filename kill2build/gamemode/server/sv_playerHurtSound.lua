@@ -9,7 +9,7 @@ local hurtSounds = {
 	}
 	
 hook.Add("EntityTakeDamage","playerHurtSounds", function(target, dmgInfgo)
-	if(!target:HasGodMode()) then
+	if(target:IsPlayer() and not target:HasGodMode()) then
 		local randomSound = math.Clamp(math.ceil(math.random(0,table.Count(hurtSounds))),1,table.Count(hurtSounds))
 		target:EmitSound(hurtSounds[randomSound])
 	end
